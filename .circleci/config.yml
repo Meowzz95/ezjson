@@ -20,8 +20,8 @@ jobs:
           name: run test
           command: |
             go get github.com/mattn/goveralls
-            go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out
-            /home/ubuntu/.go_workspace/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
+            go test -v -cover -race -coverprofile=/home/${whoami}/coverage.out
+            /home/${whoami}/.go_workspace/bin/goveralls -coverprofile=/home/${whoami}/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
 
 
 
