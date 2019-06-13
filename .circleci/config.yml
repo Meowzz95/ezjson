@@ -12,9 +12,23 @@ jobs:
           command: |
             go build -v
   test:
-    pre:
-      - go get github.com/mattn/goveralls
-    override:
-      - go test -v -cover -race -coverprofile=/home/ubuntu/coverage.out
-    post:
-      - /home/ubuntu/.go_workspace/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
+    working_directory: ~/test
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - checkout
+      - run:
+          name: run test
+          command: |
+            GO111MODULE=off go get github.com/mattn/goveralls
+            go test -v -cover -race -coverprofile=coverage.out
+            $GOPATH/bin/goveralls -coverprofile=/home/circleci/test/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
+
+
+
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build
+      - test
