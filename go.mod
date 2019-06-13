@@ -1,4 +1,4 @@
-module github.com/Meowzz95/jsonMapper
+module github.com/Meowzz95/easyJson
 
 go 1.12
 
