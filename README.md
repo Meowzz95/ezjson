@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/Meowzz95/easyJson.svg?style=shield)](https://circleci.com/gh/Meowzz95/easyJson)
-
+[![Coverage Status](https://coveralls.io/repos/github/Meowzz95/easyJson/badge.svg?branch=master)](https://coveralls.io/github/Meowzz95/easyJson?branch=master)
 # Easy JSON
 
 Miss the way you easily get data from JSON objects? EasyJSON gives you a easier interface to read data from JSON objects. No more messy `map[string]interface{}` from `json.Unmarshal()`
