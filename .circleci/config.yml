@@ -24,9 +24,9 @@ jobs:
             && /home/ubuntu/.go_workspace/bin/goveralls -coverprofile=/home/ubuntu/coverage.out -service=circle-ci -repotoken=$COVERALLS_TOKEN
 
 
-  workflows:
-    version: 2.1
-    build_and_test:
-      jobs:
-        - build
-        - test
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build
+      - test
