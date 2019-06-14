@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/Meowzz95/ezjson.svg?style=shield)](https://circleci.com/gh/Meowzz95/ezjson)
 [![Coverage Status](https://coveralls.io/repos/github/Meowzz95/ezjson/badge.svg?branch=master)](https://coveralls.io/github/Meowzz95/ezjson?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Meowzz95/ezjson)](https://goreportcard.com/report/github.com/Meowzz95/ezjson)
 # Easy JSON
 
 Miss the way you easily get data from JSON objects? EasyJSON gives you a easier interface to read data from JSON objects. No more messy `map[string]interface{}` from `json.Unmarshal()`
