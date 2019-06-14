@@ -109,30 +109,22 @@ func (it *JsonPart) GetStringCasted(key string) (string, error) {
 		return strconv.FormatBool(vBool),nil
 	}
 	if vFloat,err:=it.GetFloat64(key);err==nil{
-		return fmt.Sprintf(getFormatStringForNumber(vFloat),vFloat),nil
+		if isFloatInt(vFloat) {
+			return strconv.FormatInt(int64(vFloat),10),nil
+		}
+		return fmt.Sprintf("%f",vFloat),nil
 	}
 	if vString,err:=it.GetString(key);err==nil{
 		return vString,nil
 	}
 	if vPart,err:=it.GetPart(key);err==nil{
-		jsonStrBytes,err:=json.Marshal(vPart.part)
-		if err!=nil{
-			return "",err
-		}
+		jsonStrBytes,_:=json.Marshal(vPart.part)
 		return string(jsonStrBytes),nil
 	}
 	m,_:=it.getMap()
 	actualType:=it.getType(m[key])
 	return "",NewValueTypeMismatchError(it.key,key,"bool/float64/string/JsonPart/JsonArray",actualType.String())
 
-}
-
-func getFormatStringForNumber(num float64) string{
-	formatStr:="%f"
-	if isFloatInt(num){
-		formatStr="%d"
-	}
-	return formatStr
 }
 
 func isFloatInt(val float64) bool{

@@ -13,7 +13,7 @@ const SAMPLE_JSON_1 = `
     "Err": null,
     "Info": "",
 	"Price": 25.1,
-	"NumOfPeople":"999",
+	"NumOfPeople":999,
     "IsHigh": true,
     "Payload": {
         "ID": 14,
@@ -28,6 +28,20 @@ const SAMPLE_JSON_1 = `
 
 const ARRAY_JSON_1=`
 	[{"A":"Value A"},{"B":"Value B"}]
+`
+
+const CORRUPTED_PART_JSON_1 = `
+{
+    "Status": "SUCCESS",
+    "Err": null,
+    "Info": "",
+	"Price": 25.1,
+	"NumOfPeople":999,
+    "IsHigh": true,
+    "Payload": {
+        "ID":'::
+    }
+}
 `
 
 func getJsonPart(jsonStr string) *JsonPart {
@@ -52,6 +66,14 @@ func TestJsonPart_GetFloat64(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t,price, 25.1)
 }
+func TestJsonPart_GetFloat64_TypeMismatch(t *testing.T) {
+	jsonPart:=getJsonPart(SAMPLE_JSON_1)
+
+	price, err:=jsonPart.GetFloat64("Status")
+	assert.NotNil(t, err)
+	assert.Equal(t,price, float64(0))
+	assert.Equal(t,err.Error(),fmt.Sprintf(VALUE_TYPE_MISMATCH_ERR_TEMPLATE,jsonPart.key,"Status","string","float64"))
+}
 
 func TestJsonPart_GetFloat64_fail(t *testing.T) {
 	jsonPart:=getJsonPart(SAMPLE_JSON_1)
@@ -62,9 +84,25 @@ func TestJsonPart_GetFloat64_fail(t *testing.T) {
 
 func TestJsonPart_WrongKey(t *testing.T) {
 	jsonPart:=getJsonPart(SAMPLE_JSON_1)
-	v,err:=jsonPart.GetFloat64("NON_EXIST_FIELD")
+	const nonExistField = "NON_EXIST_FIELD"
+	v,err:=jsonPart.GetFloat64(nonExistField)
 	assert.NotNil(t, err)
 	assert.Equal(t,v,float64(0))
+
+	vBool,err:=jsonPart.GetBoolean(nonExistField)
+	assert.NotNil(t, err)
+	assert.Equal(t,err.Error(),fmt.Sprintf(KEY_DOES_NOT_EXIST_TEMPLATE,jsonPart.key,nonExistField))
+	assert.Equal(t,vBool,false)
+
+	vStr,err:=jsonPart.GetString(nonExistField)
+	assert.NotNil(t, err)
+	assert.Equal(t,err.Error(),fmt.Sprintf(KEY_DOES_NOT_EXIST_TEMPLATE,jsonPart.key,nonExistField))
+	assert.Equal(t,vStr,"")
+
+	vPart,err:=jsonPart.GetPart(nonExistField)
+	assert.NotNil(t, err)
+	assert.Equal(t,err.Error(),fmt.Sprintf(KEY_DOES_NOT_EXIST_TEMPLATE,jsonPart.key,nonExistField))
+	assert.Nil(t,vPart)
 }
 
 
@@ -114,6 +152,18 @@ func TestJsonPart_GetNull(t *testing.T) {
 	v,err:=jsonPart.GetString("Err")
 	assert.Nil(t, err)
 	assert.Equal(t,v,"")
+
+	vFloat,err:=jsonPart.GetFloat64("Err")
+	assert.Nil(t, err)
+	assert.Equal(t,vFloat,float64(0))
+
+	vBool,err:=jsonPart.GetBoolean("Err")
+	assert.Nil(t, err)
+	assert.Equal(t,vBool, false)
+
+	vPart,err:=jsonPart.GetPart("Err")
+	assert.Nil(t, err)
+	assert.Nil(t,vPart)
 }
 
 func TestJsonPart_GetStringCasted(t *testing.T) {
@@ -156,4 +206,22 @@ func TestJsonPart_WrongParent(t *testing.T) {
 	v,err:=jsonPart.GetString("A")
 	assert.NotNil(t, err)
 	assert.Equal(t,v,"")
+	assert.Equal(t,err.Error(),fmt.Sprintf(NON_MAP_ERROR_TEMPLATE,jsonPart.key))
+
+	vFloat,err:=jsonPart.GetFloat64("A")
+	assert.NotNil(t, err)
+	assert.Equal(t,vFloat,float64(0))
+
+	vBool,err:=jsonPart.GetBoolean("A")
+	assert.NotNil(t, err)
+	assert.Equal(t,vBool,false)
+
+	vStr,err:=jsonPart.GetString("A")
+	assert.NotNil(t, err)
+	assert.Equal(t,vStr,"")
+
+	vPart,err:=jsonPart.GetPart("A")
+	assert.NotNil(t, err)
+	assert.Nil(t,vPart)
+
 }
