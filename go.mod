@@ -1,4 +1,4 @@
-module github.com/Meowzz95/easyJson
+module github.com/Meowzz95/ezjson
 
 go 1.12
 

@@ -1,4 +1,4 @@
-package easyJson
+package ezjson
 
 import "fmt"
 
