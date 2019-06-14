@@ -1,5 +1,5 @@
-[![CircleCI](https://circleci.com/gh/Meowzz95/easyJson.svg?style=shield)](https://circleci.com/gh/Meowzz95/easyJson)
-[![Coverage Status](https://coveralls.io/repos/github/Meowzz95/easyJson/badge.svg?branch=master)](https://coveralls.io/github/Meowzz95/easyJson?branch=master)
+[![CircleCI](https://circleci.com/gh/Meowzz95/ezjson.svg?style=shield)](https://circleci.com/gh/Meowzz95/ezjson)
+[![Coverage Status](https://coveralls.io/repos/github/Meowzz95/ezjson/badge.svg?branch=master)](https://coveralls.io/github/Meowzz95/ezjson?branch=master)
 # Easy JSON
 
 Miss the way you easily get data from JSON objects? EasyJSON gives you a easier interface to read data from JSON objects. No more messy `map[string]interface{}` from `json.Unmarshal()`
@@ -7,7 +7,7 @@ Miss the way you easily get data from JSON objects? EasyJSON gives you a easier 
 # Install
 
 ```
-go get -u github.com/Meowzz95/easyJson
+go get -u github.com/Meowzz95/ezjson
 ```
 
 # API
