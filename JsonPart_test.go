@@ -13,6 +13,7 @@ const SAMPLE_JSON_1 = `
     "Err": null,
     "Info": "",
 	"Price": 25.1,
+	"NumOfPeople":"999",
     "IsHigh": true,
     "Payload": {
         "ID": 14,
@@ -141,6 +142,13 @@ func TestJsonPart_GetStringCasted(t *testing.T) {
 	v,err=jsonPart.GetStringCasted("Status")
 	assert.Nil(t, err)
 	assert.Equal(t,v,"SUCCESS")
+}
+
+func TestJsonPart_GetStringCasted_Int(t *testing.T) {
+	jsonPart:=getJsonPart(SAMPLE_JSON_1)
+	v,err:=jsonPart.GetStringCasted("NumOfPeople")
+	assert.Nil(t,err)
+	assert.Equal(t,v,"999")
 }
 
 func TestJsonPart_WrongParent(t *testing.T) {

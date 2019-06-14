@@ -109,7 +109,7 @@ func (it *JsonPart) GetStringCasted(key string) (string, error) {
 		return strconv.FormatBool(vBool),nil
 	}
 	if vFloat,err:=it.GetFloat64(key);err==nil{
-		return fmt.Sprintf("%f",vFloat),nil
+		return fmt.Sprintf(getFormatStringForNumber(vFloat),vFloat),nil
 	}
 	if vString,err:=it.GetString(key);err==nil{
 		return vString,nil
@@ -125,6 +125,18 @@ func (it *JsonPart) GetStringCasted(key string) (string, error) {
 	actualType:=it.getType(m[key])
 	return "",NewValueTypeMismatchError(it.key,key,"bool/float64/string/JsonPart/JsonArray",actualType.String())
 
+}
+
+func getFormatStringForNumber(num float64) string{
+	formatStr:="%f"
+	if isFloatInt(num){
+		formatStr="%d"
+	}
+	return formatStr
+}
+
+func isFloatInt(val float64) bool{
+	return val==float64(int(val))
 }
 
 func (it *JsonPart) getType(value interface{}) reflect.Type{
