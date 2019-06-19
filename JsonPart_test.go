@@ -223,3 +223,11 @@ func TestJsonPart_WrongParent(t *testing.T) {
 	assert.Nil(t, vPart)
 
 }
+
+func TestJsonPart_GetRawMap(t *testing.T) {
+	jsonPart := getJsonPart(SAMPLE_JSON_1)
+	rawMap,err:=jsonPart.GetRawMap()
+	assert.Nil(t,err)
+	status:=rawMap["Status"].(string)
+	assert.Equal(t,"SUCCESS", status)
+}
