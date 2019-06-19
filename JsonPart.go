@@ -16,11 +16,11 @@ func NewJsonPart(key string, part interface{}) *JsonPart {
 	return &JsonPart{key: key, part: part}
 }
 
-func (it *JsonPart) GetRawMap() (map[string]interface{},error){
+func (it *JsonPart) GetRawMap() map[string]interface{} {
 	aMap,_:=it.getMap()
 	// GetPart has made sure that JsonPart must have a map[string]interface{} part
 	// so ignore getMap() error
-	return aMap,nil
+	return aMap
 }
 
 func (it *JsonPart) GetFloat64(key string) (float64, error) {
