@@ -247,6 +247,9 @@ func TestJsonPart_GetFloat64F(t *testing.T) {
 
 	f:=jsonPart.GetFloat64F("Status")
 	assert.Equal(t,float64(0),f)
+	err:=jsonPart.Error()
+	assert.Equal(t, err, fmt.Sprintf(VALUE_TYPE_MISMATCH_ERR_TEMPLATE, jsonPart.key, "Status", "string", "float64"))
+
 }
 
 func TestJsonPart_GetPartF(t *testing.T) {
