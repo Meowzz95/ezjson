@@ -226,8 +226,52 @@ func TestJsonPart_WrongParent(t *testing.T) {
 
 func TestJsonPart_GetRawMap(t *testing.T) {
 	jsonPart := getJsonPart(SAMPLE_JSON_1)
-	rawMap,err:=jsonPart.GetRawMap()
-	assert.Nil(t,err)
+	rawMap:=jsonPart.GetRawMap()
 	status:=rawMap["Status"].(string)
 	assert.Equal(t,"SUCCESS", status)
+}
+
+func TestJsonPart_GetBooleanF(t *testing.T) {
+	jsonPart := getJsonPart(SAMPLE_JSON_1)
+	isHigh := jsonPart.GetBooleanF("IsHigh")
+	assert.Equal(t,true, isHigh)
+
+	f:=jsonPart.GetBooleanF("Status")
+	assert.Equal(t,false,f)
+}
+
+func TestJsonPart_GetFloat64F(t *testing.T) {
+	jsonPart := getJsonPart(SAMPLE_JSON_1)
+	price:=jsonPart.GetFloat64F("Price")
+	assert.Equal(t,float64(25.1), price)
+
+	f:=jsonPart.GetFloat64F("Status")
+	assert.Equal(t,float64(0),f)
+}
+
+func TestJsonPart_GetPartF(t *testing.T) {
+	jsonPart := getJsonPart(SAMPLE_JSON_1)
+	part:=jsonPart.GetPartF("Payload")
+	assert.NotNil(t,part)
+
+	f:=jsonPart.GetPartF("Status")
+	assert.Nil(t,f)
+}
+
+func TestJsonPart_GetStringCastedF(t *testing.T) {
+	jsonPart := getJsonPart(SAMPLE_JSON_1)
+	str:=jsonPart.GetStringCastedF("Status")
+	assert.Equal(t,"SUCCESS", str)
+
+	numOfPplString:=jsonPart.GetStringCastedF("NumOfPeople")
+	assert.Equal(t,"999",numOfPplString)
+}
+
+func TestJsonPart_GetStringF(t *testing.T) {
+	jsonPart := getJsonPart(SAMPLE_JSON_1)
+	str:=jsonPart.GetStringF("Status")
+	assert.Equal(t,"SUCCESS", str)
+
+	f:=jsonPart.GetStringF("Payload")
+	assert.Equal(t,"",f)
 }

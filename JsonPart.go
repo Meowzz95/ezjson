@@ -10,6 +10,7 @@ import (
 type JsonPart struct {
 	key  string
 	part interface{}
+	err error
 }
 
 func NewJsonPart(key string, part interface{}) *JsonPart {
@@ -51,6 +52,11 @@ func (it *JsonPart) GetFloat64Or(key string, defaultValue float64) float64 {
 	}
 	return v
 }
+func (it *JsonPart) GetFloat64F(key string) float64{
+	v,err:=it.GetFloat64(key)
+	it.err = err
+	return v
+}
 
 func (it *JsonPart) GetPart(key string) (*JsonPart, error) {
 	m, ok := it.getMap()
@@ -69,6 +75,12 @@ func (it *JsonPart) GetPart(key string) (*JsonPart, error) {
 	}
 	value := m[key].(map[string]interface{})
 	return NewJsonPart(key, value), nil
+}
+
+func (it *JsonPart) GetPartF(key string) *JsonPart {
+	v,err:=it.GetPart(key)
+	it.err = err
+	return v
 }
 
 func (it *JsonPart) GetString(key string) (string, error) {
@@ -90,6 +102,12 @@ func (it *JsonPart) GetString(key string) (string, error) {
 	return value, nil
 }
 
+func (it *JsonPart) GetStringF(key string) string{
+	v,err:=it.GetString(key)
+	it.err = err
+	return v
+}
+
 func (it *JsonPart) GetBoolean(key string) (bool, error) {
 	m, ok := it.getMap()
 	if !ok {
@@ -107,6 +125,12 @@ func (it *JsonPart) GetBoolean(key string) (bool, error) {
 	}
 	value := m[key].(bool)
 	return value, nil
+}
+
+func (it *JsonPart) GetBooleanF(key string) bool{
+	v,err:=it.GetBoolean(key)
+	it.err=err
+	return v
 }
 
 func (it *JsonPart) GetStringCasted(key string) (string, error) {
@@ -130,7 +154,11 @@ func (it *JsonPart) GetStringCasted(key string) (string, error) {
 	m, _ := it.getMap()
 	actualType := it.getType(m[key])
 	return "", NewValueTypeMismatchError(it.key, key, "bool/float64/string/JsonPart/JsonArray", actualType.String())
-
+}
+func (it *JsonPart) GetStringCastedF(key string) string {
+	v,err:=it.GetStringCasted(key)
+	it.err = err
+	return v
 }
 
 func isFloatInt(val float64) bool {
