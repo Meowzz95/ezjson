@@ -157,7 +157,11 @@ func (it *JsonPart) GetStringCasted(key string) (string, error) {
 	}
 	m, _ := it.getMap()
 	actualType := it.getType(m[key])
-	return "", NewValueTypeMismatchError(it.key, key, "bool/float64/string/JsonPart/JsonArray", actualType.String())
+	actualTypeStr := "nil"
+	if actualType != nil {
+		actualTypeStr = actualType.String()
+	}
+	return "", NewValueTypeMismatchError(it.key, key, "bool/float64/string/JsonPart/JsonArray", actualTypeStr)
 }
 func (it *JsonPart) GetStringCastedF(key string) string {
 	v, err := it.GetStringCasted(key)

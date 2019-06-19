@@ -190,6 +190,11 @@ func TestJsonPart_GetStringCasted(t *testing.T) {
 	v, err = jsonPart.GetStringCasted("Status")
 	assert.Nil(t, err)
 	assert.Equal(t, v, "SUCCESS")
+
+	//non exist key
+	v, err = jsonPart.GetStringCasted("NON_EXIST_FIELD")
+	assert.NotNil(t, err)
+	assert.Equal(t, "", v)
 }
 
 func TestJsonPart_GetStringCasted_Int(t *testing.T) {
