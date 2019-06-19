@@ -10,19 +10,19 @@ import (
 type JsonPart struct {
 	key  string
 	part interface{}
-	err error
+	err  error
 }
 
 func NewJsonPart(key string, part interface{}) *JsonPart {
 	return &JsonPart{key: key, part: part}
 }
 
-func (it *JsonPart) Error() string{
+func (it *JsonPart) Error() string {
 	return it.err.Error()
 }
 
 func (it *JsonPart) GetRawMap() map[string]interface{} {
-	aMap,_:=it.getMap()
+	aMap, _ := it.getMap()
 	// GetPart has made sure that JsonPart must have a map[string]interface{} part
 	// so ignore getMap() error
 	return aMap
@@ -56,8 +56,8 @@ func (it *JsonPart) GetFloat64Or(key string, defaultValue float64) float64 {
 	}
 	return v
 }
-func (it *JsonPart) GetFloat64F(key string) float64{
-	v,err:=it.GetFloat64(key)
+func (it *JsonPart) GetFloat64F(key string) float64 {
+	v, err := it.GetFloat64(key)
 	it.err = err
 	return v
 }
@@ -82,7 +82,7 @@ func (it *JsonPart) GetPart(key string) (*JsonPart, error) {
 }
 
 func (it *JsonPart) GetPartF(key string) *JsonPart {
-	v,err:=it.GetPart(key)
+	v, err := it.GetPart(key)
 	it.err = err
 	return v
 }
@@ -106,8 +106,8 @@ func (it *JsonPart) GetString(key string) (string, error) {
 	return value, nil
 }
 
-func (it *JsonPart) GetStringF(key string) string{
-	v,err:=it.GetString(key)
+func (it *JsonPart) GetStringF(key string) string {
+	v, err := it.GetString(key)
 	it.err = err
 	return v
 }
@@ -131,9 +131,9 @@ func (it *JsonPart) GetBoolean(key string) (bool, error) {
 	return value, nil
 }
 
-func (it *JsonPart) GetBooleanF(key string) bool{
-	v,err:=it.GetBoolean(key)
-	it.err=err
+func (it *JsonPart) GetBooleanF(key string) bool {
+	v, err := it.GetBoolean(key)
+	it.err = err
 	return v
 }
 
@@ -160,7 +160,7 @@ func (it *JsonPart) GetStringCasted(key string) (string, error) {
 	return "", NewValueTypeMismatchError(it.key, key, "bool/float64/string/JsonPart/JsonArray", actualType.String())
 }
 func (it *JsonPart) GetStringCastedF(key string) string {
-	v,err:=it.GetStringCasted(key)
+	v, err := it.GetStringCasted(key)
 	it.err = err
 	return v
 }
