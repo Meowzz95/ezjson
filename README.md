@@ -11,7 +11,7 @@ Miss the way you easily get data from JSON objects? EasyJSON gives you a easier 
 go get -u github.com/Meowzz95/ezjson
 ```
 
-# API
+# API (with error returned, for safe operation)
 
 ## Init
 ```go
@@ -90,13 +90,32 @@ v,_:=innerPart.GetFloat64("ID")
 And you can perform `Getxxx` on the nested object too.
 
 
+# API (**without** error returned, for cleaner API)
+
+Refer to the APIs above... Here are the `...F()` APIs
+
+BTW, `F` stands for force
+
+In this set of APIs, error can be retrieved from `JsonPart#Error()`
+
+Zero value is returned if error occured.
+
+```go
+GetFloat64F()
+GetPartF()
+GetStringF()
+GetBooleanF()
+GetStringCastedF()
+```
+
+
 # Other
 
 PRs are super welcome, please help a newbie :)
 
 ## TODO
 - JsonArray support
-- Chaining API
+- Chaining API (kind of achieved for the GetXXXF() APIs)
 
 ## License
 
