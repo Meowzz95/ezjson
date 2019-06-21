@@ -19,6 +19,12 @@ jsonMapper:=NewJsonMapper(jsonStr)
 jsonPart,err:=jsonMapper.GetJsonPart()
 ```
 
+or easier
+
+```go
+jsonPart, err := ezjson.NewJsonMapper(jsonString).GetJsonPart()
+```
+
 `JsonPart` will be your good friend to read data.
 
 ## Read data
